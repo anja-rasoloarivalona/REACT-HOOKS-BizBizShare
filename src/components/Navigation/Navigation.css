@@ -1,0 +1,43 @@
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 900px) {
+    .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: var(--color-grey--dark2);
+        width: 100%;
+        z-index: 1;
+    }
+}
+
+.nav__list {
+    display: flex;
+    flex: 1;
+}
+
+.nav__list a {
+    background: transparent;
+    color: var(--color-grey);
+    width: 12rem;
+}
+
+@media (max-width: 600px) {
+    .nav__list a {
+        width: 100%;
+        flex: 1;
+    }
+}
+  
+
+.nav__list a:hover {
+    color: var(--color-primary)
+}
+
+.nav__list a.active {
+    background: var(--color-primary);
+    color: var(--color-white);
+}

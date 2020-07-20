@@ -1,0 +1,26 @@
+.errors {
+    position: fixed;
+    top: 10rem;
+    right: 10rem;
+}
+
+@media (max-width: 900px) {
+    .errors {
+       right: 0;
+       left: 0;
+       margin: auto;
+       width: 60%;
+    }
+}
+.error {
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: .5rem;
+    color: #a30404;
+    border: 1px solid #a30404;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.4;
+}
+
