@@ -6,7 +6,7 @@ const Errors = props => {
         <div className="errors">
             {
                 props.errors.map((error, index) => (
-                <div className="error" key={index} onClick={() => props.onClick(index)}>{error}</div>
+                <div className="error" key={index} onClick={() => props.onClick(error)}>{error}</div>
                 ))
             }
         </div>

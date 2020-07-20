@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import './App.css';
 import {Route, Switch } from 'react-router-dom'
 
@@ -12,19 +12,9 @@ import Errors from './components/Errors/Errors'
 import Navigation from './components/Navigation/Navigation'
 
 const App = () => {
-  const [form, setForm] = useState({
-    name: '',
-    animal: ''
-  })
-  const [lists, setlist] = useState({
-    namesList: [],
-    animalsList: []
-  })
+  const [form, setForm] = useState({ name: '', animal: '' })
+  const [lists, setlist] = useState({ namesList: [], animalsList: [] })
   const [errors, setErrors] = useState([])
-
-  useEffect(() => {
-    console.log('errors', errors)
-  }, [errors])
 
 
   const onChangeInputHandler = (id, value) => {
@@ -45,13 +35,11 @@ const App = () => {
   }
 
   const addErrorHandler = errorMessage => {
-    setErrors([...errors, errorMessage])
+    !errors.includes(errorMessage) && setErrors([...errors, errorMessage])
   }
 
-  const removeErrorHandler = index => {
-    console.log('removing', index)
-    const errorsData = errors.length > 1 ? errors.splice(index, 1) : []
-    console.log('new errors', errorsData)
+  const removeErrorHandler = errorMessage => {
+    const errorsData = errors.filter( err => err !== errorMessage)
     setErrors(errorsData)
   }
 
