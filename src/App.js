@@ -1,6 +1,8 @@
 import React, { useState} from 'react'
 import './App.css';
 import {Route, Switch } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import * as actionTypes from './store/actions/actionTypes'
 
 // APP VIEWS
 import Home from './views/Home/Home'
@@ -12,14 +14,17 @@ import Errors from './components/Errors/Errors'
 import Navigation from './components/Navigation/Navigation'
 
 const App = () => {
+  
   const [form, setForm] = useState({ name: '', animal: '' })
   const [lists, setlist] = useState({ namesList: [], animalsList: [] })
-  const [errors, setErrors] = useState([])
+  
+  const errors = useSelector(state => state.errors)
+  const dispatch = useDispatch()
 
 
   const onChangeInputHandler = (id, value) => {
      setForm({ ...form, [id]: value })
-     errors.length !== 0 && setErrors([])
+     errors.length !== 0 && dispatch({ type: actionTypes.CLEAR_ERRORS})
   }
 
   const submitInputHandler = (e, id, list, value) => {
@@ -30,17 +35,18 @@ const App = () => {
           setlist({ ...lists, [list]: updatedList })
           setForm({ ...form, [id]: ''})
         } else {
-          addErrorHandler(`The submitted ${id} is too short. At least 3 characters are required.`)
+          dispatch({ 
+            type: actionTypes.ADD_ERROR,
+            message: `The submitted ${id} is too short. At least 3 characters are required.`
+          })
         }
   }
 
-  const addErrorHandler = errorMessage => {
-    !errors.includes(errorMessage) && setErrors([...errors, errorMessage])
-  }
-
   const removeErrorHandler = errorMessage => {
-    const errorsData = errors.filter( err => err !== errorMessage)
-    setErrors(errorsData)
+    dispatch({
+      type: actionTypes.REMOVE_ERROR,
+      message: errorMessage
+    })
   }
 
   const validateInput = (value) => {
@@ -55,7 +61,7 @@ const App = () => {
     <div className="container">
       <div className="app">
         <Navigation />
-        {errors.length > 0 && <Errors errors={errors} onClick={removeErrorHandler}/>}
+        {errors.length > 0 && <Errors errors={errors} onClick={removeErrorHandler} />}
         <div className="app__view">
           <Switch>
             <Route exact path="/" render={() => 
